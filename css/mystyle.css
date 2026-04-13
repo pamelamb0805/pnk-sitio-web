@@ -1,0 +1,519 @@
+body {
+  background-color: #efeee4;
+      margin: 0;
+    padding: 0;
+}
+
+
+h1 {
+  color: #3c3c3c;
+  background-color: #efeee4;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/*LOGO PRINCIPAL*/
+
+header {
+    background-color: #dedbc1;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 100;
+}
+
+.logo img {
+    height: 80px; 
+    width: auto;
+    display: block;
+    transition: transform 0.8s ease;
+}
+
+.logo img:hover {
+    transform: scale(1.05);
+}
+
+header ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 10px;
+}
+
+header ul li a {
+  display: inline-block;
+  border-radius: 5px;
+  padding: 8px 15px;
+  background-color: #b0a78f;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+header ul li.logo a {
+  border: none !important;       
+  background-color: transparent;
+  padding: 0;                    
+}
+
+header ul li a:hover {
+  background-color: #3c3c3c;
+  color: #fff;
+}
+
+/*MENU*/
+header .menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header .menu li {
+  margin: 0 5px;
+}
+
+header .menu li.logo a {
+  font-weight: bold;
+  font-size: 18px;
+  color: #3c3c3c;
+  text-decoration: none;
+}
+
+header .menu li a {
+  display: inline-block;
+  border-radius: 5px;
+  padding: 8px 15px;
+  border: 1px solid #3c3c3c;
+  background-color: #b0a78f;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+header .menu li a:hover {
+  background-color: #3c3c3c;
+  color: #fff;
+}
+
+/*boton desplegable menu*/
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #dedbc1;
+  min-width: 180px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  border-radius: 5px;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 10px;
+  color: #3c3c3c;
+  text-decoration: none;
+}
+
+.dropdown-content a:hover {
+  background-color: #3c3c3c;
+  color: white;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/*BUSCADOR/FILTROS*/
+.filtros_propiedad {
+    position: relative;
+    z-index: 50; 
+}
+
+.filtros select,
+.filtros button {
+  border-radius: 5px;
+  padding: 8px 15px;
+  border: 1px solid #3c3c3c;
+}
+
+section form {
+    background-color: #dedbc1; 
+    padding: 20px 30px; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 15px; 
+    max-width: 900px; 
+    margin: 20px auto; 
+}
+
+section form label {
+    font-weight: bold;
+    color: #444;
+}
+
+/*CARRUSEL*/
+
+.carrusel {
+    position: relative;
+    z-index: 1;
+}
+
+.carousel-item img {
+    height: 600px;
+    object-fit: cover;
+}
+
+.carousel-content-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%) !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+    align-items: flex-start; 
+    padding: 60px 8%; 
+    box-sizing: border-box;
+    pointer-events: none;
+    z-index: 10;
+    color: white;
+}
+/*logo carrusel*/
+.carousel-logo {
+  top: 100px;    
+  left: 2px;      
+  z-index: 10;   
+}
+
+.carousel-logo .logo-img {
+  width: 300px;    
+  height: auto;
+}
+
+.logo-texto {
+    display: flex;
+    flex-direction: column; 
+    align-items: flex-start;
+    line-height: 1.1;
+}
+
+.logo-texto span { 
+    font-size: 0.8rem !important; 
+    letter-spacing: 2px !important; 
+    color: #cccccc !important;
+    text-transform: uppercase;
+}
+
+.logo-texto strong { 
+    font-size: 2.2rem !important; 
+    color: #ffffff !important;
+    font-weight: 900 !important;
+    margin: 2px 0;
+}
+
+.logo-texto small { 
+    font-size: 0.7rem !important; 
+    letter-spacing: 4px !important; 
+    color: #b0a78f !important; 
+    text-transform: uppercase;
+}
+
+/*TEXTO PRINCIPAL*/
+.carousel-text-main {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+    text-align: left; 
+    max-width: 700px;
+}
+
+.carousel-text-main h1 {
+    font-size: 3.5rem !important;
+    font-weight: bold !important;
+    color: #ffffff !important; 
+    background-color: transparent !important; 
+    text-transform: uppercase;
+    margin: 0 0 10px 0 !important;
+    padding: 0 !important;
+    line-height: 1.1;
+}
+
+.carousel-text-main h2 {
+    font-size: 1.4rem !important;
+    color: #f8f9fa !important;
+    margin: 0 0 15px 0 !important;
+    text-transform: uppercase;
+    font-weight: normal;
+}
+
+.carousel-text-main h3.destacado {
+    font-size: 1.3rem !important;
+    font-weight: bold !important;
+    color: #e02a8a !important; 
+    margin: 0 !important;
+}
+
+.carousel-location {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+}
+
+/*TARJETAS*/
+.zona-tarjetas {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    max-width: 1200px; 
+    margin: 40px auto;
+    padding: 0 20px;
+    flex-wrap: wrap; 
+}
+
+.tarjeta {
+    background-color: #ffffff;
+    padding: 20px; 
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    width: calc(33.333% - 20px); 
+    max-width: 400px; 
+    transition: transform 0.3s ease;
+}
+
+.tarjeta:hover {
+    transform: translateY(-10px);
+}
+
+.caja-foto {
+    background-color: #e9ecef;
+    border-radius: 8px;
+    height: 220px; 
+    margin-bottom: 20px;
+    overflow: hidden; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.caja-foto img {
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+}
+
+.texto-propiedad h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.1rem;
+    color: #3c3c3c;
+    text-align: left;
+}
+
+.texto-propiedad .precio-destacado {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ff4500; 
+    text-align: left;
+}
+
+.tarjeta button {
+    width: 100%;
+    padding: 12px; 
+    background-color: #b0a78f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+/*Seccion Botones*/
+section form select {
+    padding: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: #f9f9f9; 
+    cursor: pointer;
+}
+
+
+section form button {
+    padding: 10px 25px;
+    background-color: #b0a78f; 
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+
+section form button:hover {
+    background-color: #4a4444; 
+}
+
+
+
+/*formulario*/
+
+form {
+  border: 1px solid #ccc;
+  padding: 20px;
+  max-width: 500px;
+  margin: 0 auto; 
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+
+form label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+  color: #333;
+}
+
+
+form input[type="text"],
+form input[type="password"],
+form input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+
+form input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+
+.clearfix {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.cancelbtn, .signupbtn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.cancelbtn {
+  background-color: #aaa;
+  color: #fff;
+}
+
+.signupbtn {
+  background-color: #b0a78f;
+  color: #fff;
+}
+
+.signupbtn:hover {
+  background-color: #4a4444;
+}
+
+
+.loginbtn {
+  padding: 10px 20px;
+  background-color: #b0a78f;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.loginbtn:hover {
+  background-color: #007bff;
+}
+
+
+/*Dashboard*/
+.bg-custom {
+  background-color: #b0a78f !important;
+}
+
+/* Ajustes de texto en navbar */
+.navbar.bg-custom .nav-link {
+  color: #fff !important;
+}
+
+.navbar.bg-custom .nav-link:hover {
+  color: #3c3c3c !important;
+}
+
+/*Botones inicio sesión*/
+.loginbtn, .gestorbtn, .propietariobtn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Botón Gestor */
+.gestorbtn {
+  background-color: #aaa;
+  color: #fff;
+}
+
+.gestorbtn:hover {
+  background-color: #777;
+}
+
+/* Botón Propietario */
+.propietariobtn {
+  background-color: #b0a78f;
+  color: #fff;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    section form {
+        flex-direction: column;
+    }
+    .tarjeta {
+        width: 100%;
+    }
+    .carousel-text-main h1 {
+        font-size: 2rem !important;
+    }
+}
+
+
+/*dashboard logo*/
+header .logo img {
+  height: 80px;
+  width: auto;
+  display: block;
+  transition: transform 0.8s ease;
+}
+
+.dashboard-logo img {
+  height: 50px;   /* ajusta el tamaño que quieras */
+  width: auto;
+  display: inline-block;
+}
