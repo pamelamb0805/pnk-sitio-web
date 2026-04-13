@@ -19,7 +19,7 @@
     </li>
   <li><a href="iniciosesion.php">Inicio Sesión</a></li>
   <li><a href="contacto.php
-    ">Contacto</a></li>
+    ">Contacto.</a></li>
 </ul>
 </header>
 
