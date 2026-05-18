@@ -4,12 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión - PNK Inmobiliaria</title>
-    <!-- Tu CSS principal (ya corregido) -->
     <link rel="stylesheet" href="css/mystyle.css">
-    <!-- Bootstrap solo para el header y posibles íconos -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 </head>
 <body>
+
+<div class="modal fade" id="errorModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title">Error de inicio de sesión</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <?php if (isset($_GET['error'])): ?>
+            <?php if ($_GET['error'] == 1): ?>
+                Debes completar todos los campos.
+            <?php elseif ($_GET['error'] == 2): ?>
+                Ingrese un correo registrado.
+            <?php elseif ($_GET['error'] == 3): ?>
+                Contraseña incorrecta.
+            <?php elseif ($_GET['error'] == 4): ?>
+                Tu cuenta está inactiva.
+            <?php endif; ?>
+        <?php endif; ?>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
   <header>
     <ul>
@@ -24,15 +49,23 @@
     </ul>
   </header>
 
-<?php if (isset($_GET['error']) && $_GET['error'] == 1): ?>
-    <p style="color:red; text-align:center;">Correo o contraseña incorrecta</p>
-<?php endif; ?>
+  <?php if (isset($_GET['error'])): ?>
+      <?php if ($_GET['error'] == 1): ?>
+          <p style="color:red; text-align:center;">Debes completar todos los campos</p>
+      <?php elseif ($_GET['error'] == 2): ?>
+          <p style="color:red; text-align:center;">El usuario no existe</p>
+      <?php elseif ($_GET['error'] == 3): ?>
+          <p style="color:red; text-align:center;">Contraseña incorrecta</p>
+      <?php elseif ($_GET['error'] == 4): ?>
+          <p style="color:red; text-align:center;">Tu cuenta está inactiva</p>
+      <?php endif; ?>
+  <?php endif; ?>
 
-    <form action="iniciar_sesion.php" method="post">
+    <form action=" backend/iniciar_sesion.php" method="POST">
+
         <h1>Iniciar Sesión</h1>
         <hr>
 
-        
         <label for="email"><b>Correo electrónico</b></label>
         <input type="email" placeholder="ejemplo@correo.com" name="email" id="email" required>
 
@@ -44,7 +77,6 @@
         </label>
 
         <div class="clearfix">
-            <button type="button" class="cancelbtn" onclick="window.location.href='index.html'">Cancelar</button>
             <button type="submit" class="signupbtn">Iniciar Sesión</button>
         </div>
 
@@ -56,5 +88,15 @@
 
     <!-- Bootstrap JS (opcional, solo para el dropdown si lo necesitas) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  <?php if (isset($_GET['error'])): ?>
+    var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+    errorModal.show();
+  <?php endif; ?>
+</script>
+
 </body>
+
 </html>

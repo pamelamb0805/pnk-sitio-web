@@ -82,6 +82,7 @@
     </div>
 
     <!-- PROPIETARIO -->
+     
     <div id="panelPropietario" class="tab-panel active">
       <form action="backend/registrar_usuario.php" method="post">
         <div class="container">
@@ -144,6 +145,7 @@
 
     <div class="clearfix">
     <button type="button" class="cancelbtn">Cancelar</button>
+    <input type="hidden" name="idperfil" value="2">
     <button type="submit" name="registrar_propietario">Registrar</button>
     </div>
   </div>
@@ -216,7 +218,8 @@
 </p>
     <div class="clearfix">
     <button type="button" class="cancelbtn">Cancelar</button>
-    <button type="submit" name="registrar_gestor">Registrar</button>
+    <input type="hidden" name="idperfil" value="3">
+    <button type="submit" name="btnGestor">Registrar</button>
     </div>
   </div>
       </form>
@@ -260,8 +263,8 @@ document.addEventListener("DOMContentLoaded", function() {
       let fecha = form.querySelector("[name='fecha_nacimiento']");
       let telefono = form.querySelector("[name='telefono']");
       let email = form.querySelector("[name='email']");
-      let clave = form.querySelector("[name='psw']");
-      let claveRepeat = form.querySelector("[name='psw-repeat']") ? form.querySelector("[name='psw-repeat']") : form.querySelector("[name='pswd-repeat']");
+      let clave = form.querySelector("[name='pswd']");
+      let claveRepeat = form.querySelector("[name='pswd-repeat']") ? form.querySelector("[name='pswd-repeat']") : form.querySelector("[name='pswd-repeat']");
       let terminos = form.querySelector("[name='terminos']");
 
       // Validar Rut
@@ -330,8 +333,8 @@ document.addEventListener("DOMContentLoaded", function() {
       if (clave.value === "") {
         clave.nextElementSibling.textContent = "Este campo es obligatorio.";
         valido = false;
-      } else if (clave.value.length < 6) {
-        clave.nextElementSibling.textContent = "La contraseña debe tener al menos 6 caracteres.";
+      } else if (clave.value.length < 8) {
+        clave.nextElementSibling.textContent = "La contraseña debe tener al menos 8 caracteres.";
         valido = false;
       }
 

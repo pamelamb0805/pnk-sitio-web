@@ -1,42 +1,54 @@
 <?php
-include ("../config/setup.php");
+include ("../config/setup.php"); // setup.php está en la raíz
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email    = $_POST['email'];
     $password = $_POST['password'];
 
+    // Validación básica: campos vacíos
+    if (empty($email) || empty($password)) {
+        header("Location: ../iniciosesion.php?error=1");
+        exit();
+    }
+
     $conexion = conectar();
 
-    // Consulta: busca usuario por email y clave
+    // Buscar usuario por email
     $sql = "SELECT usuarios.*, perfiles.nombre AS nombre_perfil 
             FROM usuarios 
             INNER JOIN perfiles ON usuarios.idperfil = perfiles.idperfil 
-            WHERE usuarios.email='$email' AND usuarios.clave='$password'";
-
+            WHERE usuarios.email='$email'";
     $result = mysqli_query($conexion, $sql);
-    $contar = mysqli_num_rows($result);
-    $datos  = mysqli_fetch_array($result);
 
-    if ($contar != 0) {
-        if ($datos['estado'] == 'activo') {
-            session_start();
-            // Guardamos datos relevantes en la sesión
-            $_SESSION['usuario_sesion'] = $datos['nombre'] . " " . $datos['apellido'];
-            $_SESSION['rut_sesion']     = $datos['rut'];
-            $_SESSION['email_sesion']   = $datos['email'];
-            $_SESSION['telefono_sesion']= $datos['telefono'];
-            $_SESSION['nombre_perfil']  = $datos['nombre_perfil'];
-            header("Location: dashboard.php");
-        } else {
-            // Usuario existe pero está inactivo
-            header("Location: backend/error.html");
-        }
-    } else {
-        // Credenciales incorrectas
-        header("Location: iniciosesion.php?error=1");
+    if (mysqli_num_rows($result) == 0) {
+        // Email no registrado
+        header("Location: ../iniciosesion.php?error=2");
+        exit();
     }
+
+    $datos = mysqli_fetch_array($result);
+
+    // Validar contraseña
+    if ($datos['clave'] !== $password) {
+        header("Location: ../iniciosesion.php?error=3");
+        exit();
+    }
+
+    // Validar estado (normalizado)
+    if (trim(strtolower($datos['estado'])) !== 'activo') {
+        header("Location: ../iniciosesion.php?error=4");
+        exit();
+    }
+
+    // Si todo está OK → iniciar sesión
+    session_start();
+    $_SESSION['usuario_sesion'] = $datos['nombre'];   // campo correcto en tu BD
+    $_SESSION['foto_sesion']    = $datos['foto'];
+    $_SESSION['nombre_perfil']  = $datos['nombre_perfil'];
+
+    header("Location: ../dashboard.php"); // dashboard en raíz
+    exit();
 
     mysqli_close($conexion);
 }
 ?>
-

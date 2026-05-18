@@ -1,5 +1,5 @@
 <?php
-include ("../config/setup.php");
+include("config/setup.php");
 session_start();
 
 if(isset($_SESSION['usuario_sesion']))
@@ -48,7 +48,7 @@ if(isset($_SESSION['usuario_sesion']))
                         <strong><?php echo $_SESSION['usuario_sesion'];?></strong><br>
                         <small class="text-muted"><?php echo $_SESSION['nombre_perfil'];?></small>
                     </div>
-                    <a href="logout.php" class="btn btn-danger btn-sm">Cerrar sesión</a>
+                    <a href="backend/logout.php" class="btn btn-danger btn-sm">Cerrar sesión</a>
                 </div>
             </div>
 
@@ -75,7 +75,7 @@ if(isset($_SESSION['usuario_sesion']))
                         ?>
                             <tr>
                                 <td><?php echo $datos['id'];?></td>
-                                <td><?php echo $datos['nombres'];?></td>
+                                <td><?php echo $datos['nombre'];?></td>
                                 <td><?php echo $datos['email'];?></td>
                                 <td><?php if($datos['estado']=='1'){?>
                                     <span class="badge bg-success">Activo</span>
@@ -107,6 +107,6 @@ if(isset($_SESSION['usuario_sesion']))
 <?php
 }else{
 
-    header("Location:error.html");
+    header("Location:backend/error.html");
 }
 ?>

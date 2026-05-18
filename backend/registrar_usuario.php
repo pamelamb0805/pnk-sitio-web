@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ('$rut', '$nombre', '$apellido', '$fecha_nacimiento', '$genero', '$telefono', '$email', '$clave', 'inactivo', NOW(), 'default.png', $idperfil)";
 
     if ($conn->query($sql) === TRUE) {
-        header("Location: iniciosesion.php");
+        header("Location: ../iniciosesion.php");
         exit();
     } else {
         echo "Error: " . $conn->error;
