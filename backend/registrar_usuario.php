@@ -11,9 +11,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email           = $_POST['email'];
     $clave           = $_POST['pswd'];
 
-    // Conexión ya está en $conn
-    $sql = "INSERT INTO usuarios (rut, nombre, apellido, fecha_nacimiento, genero, telefono, email, clave) 
-            VALUES ('$rut', '$nombre', '$apellido', '$fecha_nacimiento', '$genero', '$telefono', '$email', '$clave')";
+    // Detectar qué formulario se envió
+    // Puedes usar el botón submit o un campo hidden ya existente
+    if (isset($_POST['registrar_propietario'])) {
+        $idperfil = 2; // Propietario
+    } elseif (isset($_POST['registrar_gestor'])) {
+        $idperfil = 3; // Gestor Inmobiliario
+    } else {
+        die("Error: formulario no reconocido.");
+    }
+
+    // Insertar usuario como inactivo
+    $sql = "INSERT INTO usuarios 
+            (rut, nombre, apellido, fecha_nacimiento, genero, telefono, email, clave, estado, fecha_hora, foto, idperfil) 
+            VALUES 
+            ('$rut', '$nombre', '$apellido', '$fecha_nacimiento', '$genero', '$telefono', '$email', '$clave', 'inactivo', NOW(), 'default.png', $idperfil)";
 
     if ($conn->query($sql) === TRUE) {
         header("Location: iniciosesion.php");

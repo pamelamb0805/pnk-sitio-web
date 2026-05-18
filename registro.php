@@ -144,7 +144,7 @@
 
     <div class="clearfix">
     <button type="button" class="cancelbtn">Cancelar</button>
-    <button type="submit" class="signupbtn">Registrarse</button>
+    <button type="submit" name="registrar_propietario">Registrar</button>
     </div>
   </div>
       </form>
@@ -216,7 +216,7 @@
 </p>
     <div class="clearfix">
     <button type="button" class="cancelbtn">Cancelar</button>
-    <button type="submit" class="signupbtn" >Registrarse</button>
+    <button type="submit" name="registrar_gestor">Registrar</button>
     </div>
   </div>
       </form>
