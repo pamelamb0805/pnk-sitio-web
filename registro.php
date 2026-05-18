@@ -83,7 +83,7 @@
 
     <!-- PROPIETARIO -->
     <div id="panelPropietario" class="tab-panel active">
-      <form action="iniciosesion.html" method="post">
+      <form action="backend/registrar_usuario.php" method="post">
         <div class="container">
     <h1>Registrarse</h1>
     <p>Rellene el formulario</p>
@@ -91,15 +91,19 @@
 
     <label for="Rut"><b>Rut</b></label>
     <input type="text" placeholder="Ingrese su Rut" name="rut" required>
+    <span class="error-msg" style="color:red; font-size:0.9em;"></span>
 
         <label for="nombre"><b>Nombre</b></label>
     <input type="text" placeholder="Ingrese su nombre" name="nombre" required>
+    <span class="error-msg" style="color:red; font-size:0.9em;"></span>
 
         <label for="apellidos"><b>Apellidos</b></label>
     <input type="text" placeholder="Ingrese sus Apellidos" name="apellido" required>
+    <span class="error-msg" style="color:red; font-size:0.9em;"></span>
 
         <label for="fecha_nacimiento"><b>Fecha nacimiento</b></label>
     <input type="date" placeholder="Ingrese su fecha de nacimiento" name="fecha_nacimiento" required>
+    <span class="error-msg" style="color:red; font-size:0.9em;"></span>
 
 
     <section class="genero">
@@ -109,18 +113,23 @@
          <option value="Masculino">Masculino</option>
         <option value="Femenino">Femenino</option>
      </select>
+     <span class="error-msg" style="color:red; font-size:0.9em;"></span>
 
         <label for="telefono"><b>Teléfono</b></label>
     <input type="text" placeholder="Ingrese su teléfono (+569)" name="telefono" required>
+    <span class="error-msg" style="color:red; font-size:0.9em;"></span>
 
     <label for="email"><b>Email</b></label>
     <input type="text" placeholder="Ingrese su email" name="email" required>
+    <span class="error-msg" style="color:red; font-size:0.9em;"></span>
 
-    <label for="psw"><b>Contraseña</b></label>
-    <input type="password" placeholder="Ingrese su contraseña" name="psw" required>
+    <label for="pswd"><b>Contraseña</b></label>
+    <input type="password" placeholder="Ingrese su contraseña" name="pswd" required>
+    <span class="error-msg" style="color:red; font-size:0.9em;"></span>
 
-    <label for="psw-repeat"><b>Repita su contraseña</b></label>
-    <input type="password" placeholder="Repita su contraseña" name="psw-repeat" required>
+    <label for="pswd-repeat"><b>Repita su contraseña</b></label>
+    <input type="password" placeholder="Repita su contraseña" name="pswd-repeat" required>
+    <span class="error-msg" style="color:red; font-size:0.9em;"></span>
 
     <label>
     <input type="checkbox" checked="checked" name="Recordar" style="margin-bottom:15px"> Recuerdame
@@ -143,7 +152,7 @@
 
     <!-- GESTOR -->
     <div id="panelGestor" class="tab-panel">
-      <form action="iniciosesion.html" method="post" enctype="multipart/form-data">
+      <form action="backend/registrar_usuario.php" method="post" enctype="multipart/form-data">
         <div class="container">
     <h1>Registrarse</h1>
     <p>Rellene el formulario</p>
@@ -151,15 +160,19 @@
 
     <label for="Rut"><b>Rut</b></label>
     <input type="text" placeholder="Ingrese su Rut" name="rut" required>
+    <span class="error-msg" style="color:red; font-size:0.9em;"></span>
 
         <label for="nombre"><b>Nombre</b></label>
     <input type="text" placeholder="Ingrese su nombre" name="nombre" required>
+    <span class="error-msg" style="color:red; font-size:0.9em;"></span>
 
         <label for="apellidos"><b>Apellidos</b></label>
     <input type="text" placeholder="Ingrese sus Apellidos" name="apellido" required>
+    <span class="error-msg" style="color:red; font-size:0.9em;"></span>
 
         <label for="fecha_nacimiento"><b>Fecha nacimiento</b></label>
     <input type="date" placeholder="Ingrese su fecha de nacimiento" name="fecha_nacimiento" required>
+    <span class="error-msg" style="color:red; font-size:0.9em;"></span>
 
 
     <section class="genero">
@@ -169,21 +182,27 @@
          <option value="Masculino">Masculino</option>
         <option value="Femenino">Femenino</option>
      </select>
+     <span class="error-msg" style="color:red; font-size:0.9em;"></span>
 
         <label for="telefono"><b>Teléfono</b></label>
     <input type="text" placeholder="Ingrese su teléfono (+569)" name="telefono" required>
+    <span class="error-msg" style="color:red; font-size:0.9em;"></span>
 
     <label for="email"><b>Email</b></label>
     <input type="text" placeholder="Ingrese su email" name="email" required>
+    <span class="error-msg" style="color:red; font-size:0.9em;"></span>
 
-    <label for="psw"><b>Contraseña</b></label>
-    <input type="password" placeholder="Ingrese su contraseña" name="psw" required>
+    <label for="pswd"><b>Contraseña</b></label>
+    <input type="password" placeholder="Ingrese su contraseña" name="pswd" required>
+    <span class="error-msg" style="color:red; font-size:0.9em;"></span>
 
-    <label for="psw-repeat"><b>Repita su contraseña</b></label>
-    <input type="password" placeholder="Repita su contraseña" name="psw-repeat" required>
+    <label for="pswd-repeat"><b>Repita su contraseña</b></label>
+    <input type="password" placeholder="Repita su contraseña" name="pswd-repeat" required>
+    <span class="error-msg" style="color:red; font-size:0.9em;"></span>
 
     <label for="certificado"><b>Certificado de Antecedentes</b></label>
     <input type="file" placeholder="Adjunte su Certificado de Antecedentes" name="certificado" required>
+    <span class="error-msg" style="color:red; font-size:0.9em;"></span>
 
     <label>
     <input type="checkbox" checked="checked" name="Recordar" style="margin-bottom:15px"> Recuerdame
@@ -222,5 +241,122 @@
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const forms = document.querySelectorAll("form");
+
+  forms.forEach(form => {
+    form.addEventListener("submit", function(e) {
+      let valido = true;
+
+      // Limpiar mensajes previos
+      form.querySelectorAll(".error-msg").forEach(el => el.textContent = "");
+
+      // Campos
+      let rut = form.querySelector("[name='rut']");
+      let nombre = form.querySelector("[name='nombre']");
+      let apellido = form.querySelector("[name='apellido']");
+      let fecha = form.querySelector("[name='fecha_nacimiento']");
+      let telefono = form.querySelector("[name='telefono']");
+      let email = form.querySelector("[name='email']");
+      let clave = form.querySelector("[name='psw']");
+      let claveRepeat = form.querySelector("[name='psw-repeat']") ? form.querySelector("[name='psw-repeat']") : form.querySelector("[name='pswd-repeat']");
+      let terminos = form.querySelector("[name='terminos']");
+
+      // Validar Rut
+      if (rut.value.trim() === "") {
+        rut.nextElementSibling.textContent = "Este campo es obligatorio.";
+        valido = false;
+      } else if (!/^\d{1,2}\.?\d{3}\.?\d{3}-[0-9Kk]$/.test(rut.value.trim())) {
+        rut.nextElementSibling.textContent = "Rut inválido (ejemplo: 12345678-9).";
+        valido = false;
+      }
+
+      // Validar nombre y apellido
+      if (nombre.value.trim() === "") {
+        nombre.nextElementSibling.textContent = "Este campo es obligatorio.";
+        valido = false;
+      } else if (nombre.value.trim().length < 2) {
+        nombre.nextElementSibling.textContent = "El nombre debe tener al menos 2 caracteres.";
+        valido = false;
+      }
+
+      if (apellido.value.trim() === "") {
+        apellido.nextElementSibling.textContent = "Este campo es obligatorio.";
+        valido = false;
+      } else if (apellido.value.trim().length < 2) {
+        apellido.nextElementSibling.textContent = "El apellido debe tener al menos 2 caracteres.";
+        valido = false;
+      }
+
+      // Validar fecha y mayor de edad
+      if (!fecha.value) {
+        fecha.nextElementSibling.textContent = "Este campo es obligatorio.";
+        valido = false;
+      } else {
+        let nacimiento = new Date(fecha.value);
+        let hoy = new Date();
+        let edad = hoy.getFullYear() - nacimiento.getFullYear();
+        let mes = hoy.getMonth() - nacimiento.getMonth();
+        if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
+          edad--;
+        }
+        if (edad < 18) {
+          fecha.nextElementSibling.textContent = "Debe ser mayor de edad (mínimo 18 años).";
+          valido = false;
+        }
+      }
+
+      // Validar teléfono
+      if (telefono.value.trim() === "") {
+        telefono.nextElementSibling.textContent = "Este campo es obligatorio.";
+        valido = false;
+      } else if (!/^\+569\d{8}$/.test(telefono.value.trim())) {
+        telefono.nextElementSibling.textContent = "Teléfono inválido (+569XXXXXXXX).";
+        valido = false;
+      }
+
+      // Validar email
+      if (email.value.trim() === "") {
+        email.nextElementSibling.textContent = "Este campo es obligatorio.";
+        valido = false;
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
+        email.nextElementSibling.textContent = "Correo electrónico inválido.";
+        valido = false;
+      }
+
+      // Validar contraseñas
+      if (clave.value === "") {
+        clave.nextElementSibling.textContent = "Este campo es obligatorio.";
+        valido = false;
+      } else if (clave.value.length < 6) {
+        clave.nextElementSibling.textContent = "La contraseña debe tener al menos 6 caracteres.";
+        valido = false;
+      }
+
+      if (claveRepeat.value === "") {
+        claveRepeat.nextElementSibling.textContent = "Este campo es obligatorio.";
+        valido = false;
+      } else if (clave.value !== claveRepeat.value) {
+        claveRepeat.nextElementSibling.textContent = "Las contraseñas no coinciden.";
+        valido = false;
+      }
+
+      // Validar términos
+      if (!terminos.checked) {
+        terminos.nextElementSibling.textContent = "Debe aceptar los términos y condiciones.";
+        valido = false;
+      }
+
+      if (!valido) {
+        e.preventDefault();
+      }
+    });
+  });
+});
+</script>
+
+
 </body>
 </html>

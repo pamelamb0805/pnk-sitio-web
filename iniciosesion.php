@@ -24,10 +24,15 @@
     </ul>
   </header>
 
-    <form action="iniciosesion.php" method="post">
+<?php if (isset($_GET['error']) && $_GET['error'] == 1): ?>
+    <p style="color:red; text-align:center;">Correo o contraseña incorrecta</p>
+<?php endif; ?>
+
+    <form action="iniciar_sesion.php" method="post">
         <h1>Iniciar Sesión</h1>
         <hr>
 
+        
         <label for="email"><b>Correo electrónico</b></label>
         <input type="email" placeholder="ejemplo@correo.com" name="email" id="email" required>
 

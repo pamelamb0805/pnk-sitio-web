@@ -1,119 +1,112 @@
+<?php
+include ("../config/setup.php");
+session_start();
+
+if(isset($_SESSION['usuario_sesion']))
+{
+?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PNK Inmobiliaria - Dashboard Propietario</title>
-  <!-- Bootstrap 5 -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Bootstrap 5</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="../css/mistyle.css" rel="stylesheet">
+    <script src="../js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+
 </head>
 <body>
-  
-<!-- Banner -->
-<header style="background-color:#b0a78f; color:white;" class="p-3">
-  <div class="container d-flex justify-content-between align-items-center">
-    <div>
-      <h3>Bienvenido, Propietario: Juan Pérez</h3>
-      <p class="mb-0">Correo: juanperez@ejemplo.com</p>
-    </div>
-    <img src="img/avatar.png" alt="Avatar" class="rounded-circle" width="60">
-  </div>
-</header>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg shadow-sm" style="background-color:#b0a78f;">
-  <div class="container">
-    <a class="navbar-brand fw-bold text-white" href="#">PNK Inmobiliaria</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="menuPrincipal">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link text-white" href="#">Dashboard</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="#">Mis Propiedades</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="#">Agregar Propiedad</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="#">Solicitudes de Visita</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="#">Perfil</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="iniciosesion.php">Cerrar Sesión</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
+<div class="container-fluid">
+    <div class="row">
+        
+        <!-- Sidebar -->
+        <div class="col-md-2 p-3 sidebar">
+            <h4 class="text-white mb-4">Mi Panel</h4>
 
-<!-- Contenido principal -->
-<main class="container my-4">
-  <div class="row g-4">
-    <!-- Panel Mis Propiedades -->
-    <div class="col-md-6">
-      <div class="card shadow-sm">
-        <div class="card-body">
-          <h5 class="card-title">Mis Propiedades</h5>
-          <ul class="list-group">
-            <li class="list-group-item">Casa en El Milagro - Estado: Publicada 
-              <button class="btn btn-sm btn-primary">Editar</button>
-              <button class="btn btn-sm btn-danger">Eliminar</button>
-            </li>
-            <li class="list-group-item">Departamento en Centro - Estado: Pendiente 
-              <button class="btn btn-sm btn-primary">Editar</button>
-              <button class="btn btn-sm btn-danger">Eliminar</button>
-            </li>
-          </ul>
+            <a href="#">Inicio</a>
+            <a href="#">Usuarios</a>
+            <a href="#">Reportes</a>
+            <a href="#">Configuración</a>
         </div>
-      </div>
-    </div>
 
-    <!-- Panel Agregar Propiedad -->
-    <div class="col-md-6">
-      <div class="card shadow-sm">
-        <div class="card-body">
-          <h5 class="card-title">Agregar Nueva Propiedad</h5>
-          <p>Formulario para ingresar datos completos de la vivienda:</p>
-          <button class="btn btn-success">Crear Propiedad</button>
+        <!-- Contenido -->
+        <div class="col-md-10 p-4">
+            
+            <!-- Encabezado usuario -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="mb-0">Dashboard</h2>
+
+                <div class="user-box d-flex align-items-center gap-3">
+                    <img src="img/<?php echo $_SESSION['foto_sesion'];?>" alt="Usuario" class="user-thumb">
+                    <div>
+                        <strong><?php echo $_SESSION['usuario_sesion'];?></strong><br>
+                        <small class="text-muted"><?php echo $_SESSION['nombre_perfil'];?></small>
+                    </div>
+                    <a href="logout.php" class="btn btn-danger btn-sm">Cerrar sesión</a>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <h4 class="mb-3">Últimos registros</h4>
+
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Correo</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                            $sql="select * from usuarios";
+                            $result=mysqli_query(conectar(),$sql);
+                            $contar=mysqli_num_rows($result);
+                            while($datos=mysqli_fetch_array($result))
+                            {
+                        ?>
+                            <tr>
+                                <td><?php echo $datos['id'];?></td>
+                                <td><?php echo $datos['nombres'];?></td>
+                                <td><?php echo $datos['email'];?></td>
+                                <td><?php if($datos['estado']=='1'){?>
+                                    <span class="badge bg-success">Activo</span>
+                                    <?php
+                                    }else{
+                                        ?>
+                                        <span class="badge bg-danger">Inactivo</span>
+                                    <?php
+                                    }
+                                    ?>
+                                </td>
+                            </tr>
+                        <?php
+                            }
+                        ?>  
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </div>
-      </div>
     </div>
-  </div>
+</div>
 
-  <!-- Sección adicional -->
-  <div class="row mt-4">
-    <!-- Solicitudes de Visita -->
-    <div class="col-md-6">
-      <div class="card shadow-sm">
-        <div class="card-body">
-          <h5 class="card-title">Solicitudes de Visita</h5>
-          <p>No hay solicitudes pendientes.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Notificaciones -->
-    <div class="col-md-6">
-      <div class="card shadow-sm">
-        <div class="card-body">
-          <h5 class="card-title">Notificaciones</h5>
-          <p>Tu cuenta ha sido activada correctamente.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Perfil -->
-  <div class="row mt-4">
-    <div class="col-md-12">
-      <div class="card shadow-sm">
-        <div class="card-body">
-          <h5 class="card-title">Perfil de Usuario</h5>
-          <p>Nombre: Juan Pérez</p>
-          <p>Correo: juanperez@ejemplo.com</p>
-          <button class="btn btn-primary">Editar Perfil</button>
-          <button class="btn btn-warning">Cambiar Contraseña</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</main>
-
-<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
+<?php
+}else{
+
+    header("Location:error.html");
+}
+?>
