@@ -48,6 +48,12 @@ if(isset($_SESSION['usuario_sesion']))
                         <strong><?php echo $_SESSION['usuario_sesion'];?></strong><br>
                         <small class="text-muted"><?php echo $_SESSION['nombre_perfil'];?></small>
                     </div>
+                    // solo el administrador puede editar usuarios
+                    <?php if ($_SESSION['nombre_perfil'] === 'Administrador'): ?>
+                    <h2>Gestión de Usuarios</h2>
+                    <a href="backend/frm_usuarios.php" class="btn btn-primary">Administrar usuarios</a>
+                    <?php endif; ?>
+
                     <a href="backend/logout.php" class="btn btn-danger btn-sm">Cerrar sesión</a>
                 </div>
             </div>
