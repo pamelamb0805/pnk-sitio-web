@@ -73,17 +73,28 @@ function procesarFotos($id_propiedad, $hayFotosPrevias) {
 function insertar() {
     $conexion = conectar();
 
-    $tipo        = $_POST['frm_tipo'];
-    $descripcion = $_POST['frm_descripcion'];
-    $banos       = $_POST['frm_banos'];
-    $dormitorios = $_POST['frm_dormitorios'];
+    $tipo            = $_POST['frm_tipo'];
+    $descripcion     = $_POST['frm_descripcion'];
+    $banos           = $_POST['frm_banos'];
+    $dormitorios     = $_POST['frm_dormitorios'];
     $area_terreno    = $_POST['frm_area_terreno'];
     $area_construida = $_POST['frm_area_construida'];
-    $precio_pesos = $_POST['frm_precio_pesos'];
-    $precio_uf    = $_POST['frm_precio_uf'];
-    $fecha_pub    = $_POST['frm_fecha_publicacion'];
-    $estado       = $_POST['frm_estado'];
-    $id_usuario   = $_SESSION['id_sesion'];
+    
+    // Normalizamos vacíos para campos numéricos para evitar que rompan la query si van vacíos
+    $precio_pesos    = !empty($_POST['frm_precio_pesos']) ? $_POST['frm_precio_pesos'] : 0;
+    $precio_uf       = !empty($_POST['frm_precio_uf']) ? $_POST['frm_precio_uf'] : 0;
+    
+    $fecha_pub       = $_POST['frm_fecha_publicacion'];
+    $estado          = $_POST['frm_estado'];
+
+    // 🚀 OBTENER ID REAL MEDIANTE EL NOMBRE EN SESIÓN
+    $nombre_usuario  = $_SESSION['usuario_sesion'];
+    $nombreEscapado  = mysqli_real_escape_string($conexion, $nombre_usuario);
+    $consulta_id     = mysqli_query($conexion, "SELECT id FROM usuarios WHERE nombre = '$nombreEscapado' LIMIT 1");
+    $resultado_id    = mysqli_fetch_assoc($consulta_id);
+    
+    // Asignamos la id numérica encontrada
+    $id_usuario      = $resultado_id['id'];
 
     $region    = mysqli_real_escape_string($conexion, $_POST['frm_region']);
     $provincia = mysqli_real_escape_string($conexion, $_POST['frm_provincia']);
@@ -130,9 +141,9 @@ function modificar() {
     $fecha_pub    = $_POST['frm_fecha_publicacion'];
     $estado       = $_POST['frm_estado'];
 
-    $region    = mysqli_real_escape_string($conexion, $_POST['frm_region']);
-    $provincia = mysqli_real_escape_string($conexion, $_POST['frm_provincia']);
-    $comuna    = mysqli_real_escape_string($conexion, $_POST['frm_comuna']);
+    $region    = mysqli_real_escape_string($conexion, $_POST['frm_region'] ?? '');
+    $provincia = mysqli_real_escape_string($conexion, $_POST['frm_provincia'] ?? '');
+    $comuna    = mysqli_real_escape_string($conexion, $_POST['frm_comuna'] ?? '');
     $sector    = mysqli_real_escape_string($conexion, $_POST['frm_sector'] ?? '');
 
     $checks = obtenerChecks();
@@ -164,14 +175,19 @@ function modificar() {
 
     mysqli_query($conexion, $sql) or die("Error en modificación: " . mysqli_error($conexion));
 
-    // ¿Ya tenía fotos? para no marcar una segunda principal por error
     $check_fotos = mysqli_query($conexion, "SELECT id FROM fotos_propiedades WHERE id_propiedad='$id' LIMIT 1");
     $hayFotosPrevias = $check_fotos && mysqli_num_rows($check_fotos) > 0;
+
+    if (!empty($_FILES['frm_fotos']['name'][0])) {
+        mysqli_query($conexion, "UPDATE fotos_propiedades SET es_principal = 0 WHERE id_propiedad = '$id'");
+        $hayFotosPrevias = false;
+    }
 
     procesarFotos($id, $hayFotosPrevias);
 
     header("Location: frm_propiedades.php");
 }
+
 
 function eliminar() {
     $conexion = conectar();
