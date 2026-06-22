@@ -527,3 +527,27 @@ form input[type="checkbox"] {
     width: 100%;
   }
 }
+
+<div class="card">
+  <div class="card-header">Panel de Control</div>
+  <div class="card-body">
+    <p>Bienvenido, <?php echo $_SESSION['usuario']; ?></p>
+    <a href="backend/logout.php" class="btn btn-danger">Cerrar sesión</a>
+  </div>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-hover align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Usuario</th>
+        <th>Perfil</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- filas dinámicas -->
+    </tbody>
+  </table>
+</div>

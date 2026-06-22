@@ -1,5 +1,6 @@
 <?php
 include __DIR__ . "/../config/setup.php";
+include __DIR__ . "/../backend/validar.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $rut             = $_POST['rut'];
@@ -12,7 +13,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $clave           = $_POST['pswd'];
 
     // Detectar qué formulario se envió
-    // Puedes usar el botón submit o un campo hidden ya existente
     if (isset($_POST['registrar_propietario'])) {
         $idperfil = 2; // Propietario
     } elseif (isset($_POST['registrar_gestor'])) {
@@ -21,11 +21,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Error: formulario no reconocido.");
     }
 
+    // Validar Rut antes de conectar/guardar
+    if (!validarRutChileno($rut)) {
+        die("Error: RUT inválido. Por favor, ingrese un RUT existente.");
+    }
+
+    $conn = conectar();
+
     // Insertar usuario como inactivo
     $sql = "INSERT INTO usuarios 
             (rut, nombre, apellido, fecha_nacimiento, genero, telefono, email, clave, estado, fecha_hora, foto, idperfil) 
             VALUES 
-            ('$rut', '$nombre', '$apellido', '$fecha_nacimiento', '$genero', '$telefono', '$email', '$clave', 'inactivo', NOW(), 'default.png', $idperfil)";
+            ('$rut', '$nombre', '$apellido', '$fecha_nacimiento', '$genero', '$telefono', '$email', '$clave', 'inactivo', NOW(), 'default.png', '$idperfil')";
 
     if ($conn->query($sql) === TRUE) {
         header("Location: ../iniciosesion.php");
