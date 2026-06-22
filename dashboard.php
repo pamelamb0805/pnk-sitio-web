@@ -4,7 +4,7 @@ session_start();
 
 if(isset($_SESSION['usuario_sesion']))
 {
-$esAdministrador = ($_SESSION['nombre_perfil'] === 'Administrador');
+    $esAdministrador = ($_SESSION['nombre_perfil'] === 'Administrador');
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -18,104 +18,96 @@ $esAdministrador = ($_SESSION['nombre_perfil'] === 'Administrador');
 
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">🏠 Mi Panel</a>
-    <div class="d-flex">
-      <a href="backend/logout.php" class="btn btn-danger btn-sm">Cerrar sesión</a>
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">🏠 Mi Panel</a>
+        <div class="d-flex">
+            <a href="backend/logout.php" class="btn btn-danger btn-sm">Cerrar sesión</a>
+        </div>
     </div>
-  </div>
 </nav>
 
 <div class="container-fluid">
-  <div class="row">
-    <!-- Sidebar -->
-    <div class="col-md-2 bg-dark text-white p-3 vh-100">
-      <h5 class="mb-4">Menú</h5>
-      <ul class="nav flex-column">
-        <li class="nav-item"><a class="nav-link text-white" href="#">Inicio</a></li>
-        <?php if ($esAdministrador): ?>
-        <li class="nav-item"><a class="nav-link text-white" href="backend/frm_usuarios.php">Usuarios</a></li>
-        <?php endif; ?>
-        <li class="nav-item"><a class="nav-link text-white" href="backend/frm_propiedades.php">Mis Propiedades</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="backend/agregar_propiedad.php">+ Nueva Propiedad</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="#">Reportes</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="#">Configuración</a></li>
-      </ul>
-    </div>
+    <div class="row">
 
-    <!-- Contenido -->
-    <div class="col-md-10 p-4">
+        <!-- Sidebar -->
+        <div class="col-md-2 bg-dark text-white p-3 vh-100">
+            <h5 class="mb-4">Menú</h5>
+            <ul class="nav flex-column">
+                <li class="nav-item"><a class="nav-link text-white" href="#">Inicio</a></li>
+                <?php if ($esAdministrador): ?>
+                <li class="nav-item"><a class="nav-link text-white" href="backend/frm_usuarios.php">Usuarios</a></li>
+                <?php endif; ?>
+                <li class="nav-item"><a class="nav-link text-white" href="backend/frm_propiedades.php">Mis Propiedades</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="backend/agregar_propiedad.php">+ Nueva Propiedad</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="#">Reportes</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="#">Configuración</a></li>
+            </ul>
+        </div>
 
-      <!-- Encabezado usuario -->
-      <div class="card shadow mb-4">
-        <div class="card-body d-flex justify-content-between align-items-center">
-          <div>
-            <h4 class="mb-0">Bienvenido, <?php echo $_SESSION['usuario_sesion'];?></h4>
-            <small class="text-muted"><?php echo $_SESSION['nombre_perfil'];?></small>
-          </div>
-          <div class="d-flex align-items-center gap-3">
-            <img src="img/<?php echo $_SESSION['foto_sesion'];?>" alt="Usuario" class="rounded-circle" width="50" height="50">
+        <!-- Contenido -->
+        <div class="col-md-10 p-4">
+
+            <!-- Encabezado usuario -->
+            <div class="card shadow mb-4">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4 class="mb-0">Bienvenido, <?php echo $_SESSION['usuario_sesion'];?></h4>
+                        <small class="text-muted"><?php echo $_SESSION['nombre_perfil'];?></small>
+                    </div>
+                    <div class="d-flex align-items-center gap-3">
+                        <img src="img/<?php echo $_SESSION['foto_sesion'];?>" alt="Usuario" class="rounded-circle" width="50" height="50">
+                        <?php if ($esAdministrador): ?>
+                        <a href="backend/frm_usuarios.php" class="btn btn-primary">Gestionar usuarios</a>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabla: SOLO visible para Administrador -->
             <?php if ($esAdministrador): ?>
-              <a href="backend/frm_usuarios.php" class="btn btn-primary">Gestionar usuarios</a>
+            <div class="card shadow">
+                <div class="card-header bg-dark text-white">Últimos registros</div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Correo</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                            $sql="SELECT * FROM usuarios";
+                            $result=mysqli_query(conectar(),$sql);
+                            while($datos=mysqli_fetch_array($result))
+                            {
+                            ?>
+                            <tr>
+                                <td><?php echo $datos['id'];?></td>
+                                <td><?php echo $datos['nombre'];?></td>
+                                <td><?php echo $datos['email'];?></td>
+                                <td>
+                                    <?php if($datos['estado']=='1'){ ?>
+                                    <span class="badge bg-success">Activo</span>
+                                    <?php } else { ?>
+                                    <span class="badge bg-danger">Inactivo</span>
+                                    <?php } ?>
+                                </td>
+                            </tr>
+                            <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
             <?php endif; ?>
-          </div>
-        </div>
-      </div>
+            <!-- FIN bloque Administrador -->
 
-      <!-- Tabla -->
-      <div class="card shadow">
-        <div class="card-header bg-dark text-white">Últimos registros</div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-hover align-middle">
-              <thead class="table-dark">
-                <tr>
-                  <?php if ($esAdministrador): ?>
-                  <th>Foto</th>
-                  <?php endif; ?>
-                  <th>ID</th>
-                  <th>Nombre</th>
-                  <th>Correo</th>
-                  <th>Estado</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php
-                  $sql = "SELECT * FROM usuarios";
-                  $result = mysqli_query(conectar(), $sql);
-                  while($datos = mysqli_fetch_array($result)):
-                    $foto_usuario = !empty($datos['foto']) ? $datos['foto'] : 'default.png';
-                ?>
-                <tr>
-                  <?php if ($esAdministrador): ?>
-                  <td>
-                    <img src="img/<?php echo htmlspecialchars($foto_usuario); ?>"
-                         alt="Foto"
-                         class="rounded-circle"
-                         width="40" height="40"
-                         style="object-fit:cover">
-                  </td>
-                  <?php endif; ?>
-                  <td><?php echo $datos['id']; ?></td>
-                  <td><?php echo htmlspecialchars($datos['nombre']); ?></td>
-                  <td><?php echo htmlspecialchars($datos['email']); ?></td>
-                  <td>
-                    <?php if($datos['estado'] == '1'): ?>
-                      <span class="badge bg-success">Activo</span>
-                    <?php else: ?>
-                      <span class="badge bg-danger">Inactivo</span>
-                    <?php endif; ?>
-                  </td>
-                </tr>
-                <?php endwhile; ?>
-              </tbody>
-            </table>
-          </div>
         </div>
-      </div>
-
     </div>
-  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
