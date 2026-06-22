@@ -14,7 +14,7 @@
   <header>
 <ul>
   <li class="logo">
-    <a href="index.html" class="logo-link">
+    <a href="index.php" class="logo-link">
       <img src="img/logo.png" alt="Logo">
     </a>
   </li>

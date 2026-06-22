@@ -45,7 +45,7 @@
 <body>
 <header>
   <ul>
-    <li class="logo"><a href="index.html"><img src="img/logo.png" alt="Logo PNK"></a></li>
+    <li class="logo"><a href="index.php"><img src="img/logo.png" alt="Logo PNK"></a></li>
   </ul>
   <ul>
     <li><a href="registro.php">Registrate</a></li>
@@ -120,7 +120,7 @@
         </p>
 
         <div class="clearfix">
-          <button type="button" class="cancelbtn" onclick="window.location.href='index.html'">Cancelar</button>
+          <button type="button" class="cancelbtn" onclick="window.location.href='index.php'">Cancelar</button>
           <input type="hidden" name="idperfil" value="2">
           <button type="submit" name="registrar_propietario">Registrar</button>
         </div>
@@ -192,7 +192,7 @@
         </p>
 
         <div class="clearfix">
-          <button type="button" class="cancelbtn" onclick="window.location.href='index.html'">Cancelar</button>
+          <button type="button" class="cancelbtn" onclick="window.location.href='index.php'">Cancelar</button>
           <input type="hidden" name="idperfil" value="3">
           <button type="submit" name="btnGestor">Registrar</button>
         </div>

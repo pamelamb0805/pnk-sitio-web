@@ -45,6 +45,7 @@ $esAdministrador = ($_SESSION['nombre_perfil'] === 'Administrador');
 
     <!-- Contenido -->
     <div class="col-md-10 p-4">
+
       <!-- Encabezado usuario -->
       <div class="card shadow mb-4">
         <div class="card-body d-flex justify-content-between align-items-center">
@@ -69,6 +70,9 @@ $esAdministrador = ($_SESSION['nombre_perfil'] === 'Administrador');
             <table class="table table-hover align-middle">
               <thead class="table-dark">
                 <tr>
+                  <?php if ($esAdministrador): ?>
+                  <th>Foto</th>
+                  <?php endif; ?>
                   <th>ID</th>
                   <th>Nombre</th>
                   <th>Correo</th>
@@ -77,24 +81,33 @@ $esAdministrador = ($_SESSION['nombre_perfil'] === 'Administrador');
               </thead>
               <tbody>
                 <?php
-                  $sql="SELECT * FROM usuarios";
-                  $result=mysqli_query(conectar(),$sql);
-                  while($datos=mysqli_fetch_array($result))
-                  {
+                  $sql = "SELECT * FROM usuarios";
+                  $result = mysqli_query(conectar(), $sql);
+                  while($datos = mysqli_fetch_array($result)):
+                    $foto_usuario = !empty($datos['foto']) ? $datos['foto'] : 'default.png';
                 ?>
                 <tr>
-                  <td><?php echo $datos['id'];?></td>
-                  <td><?php echo $datos['nombre'];?></td>
-                  <td><?php echo $datos['email'];?></td>
+                  <?php if ($esAdministrador): ?>
                   <td>
-                    <?php if($datos['estado']=='1'){ ?>
+                    <img src="img/<?php echo htmlspecialchars($foto_usuario); ?>"
+                         alt="Foto"
+                         class="rounded-circle"
+                         width="40" height="40"
+                         style="object-fit:cover">
+                  </td>
+                  <?php endif; ?>
+                  <td><?php echo $datos['id']; ?></td>
+                  <td><?php echo htmlspecialchars($datos['nombre']); ?></td>
+                  <td><?php echo htmlspecialchars($datos['email']); ?></td>
+                  <td>
+                    <?php if($datos['estado'] == '1'): ?>
                       <span class="badge bg-success">Activo</span>
-                    <?php } else { ?>
+                    <?php else: ?>
                       <span class="badge bg-danger">Inactivo</span>
-                    <?php } ?>
+                    <?php endif; ?>
                   </td>
                 </tr>
-                <?php } ?>  
+                <?php endwhile; ?>
               </tbody>
             </table>
           </div>

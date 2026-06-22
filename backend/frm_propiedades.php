@@ -18,11 +18,46 @@ $esAdministrador = ($_SESSION['nombre_perfil'] === 'Administrador');
     <script src="../js/login.js"></script>
     <script src="../js/sweetalert2@11"></script>
     <style>
-      .checks-row .form-check { width: 50%; float: left; }
+        .checks-row .form-check { width: 50%; float: left; }
+        #galeria_fotos_edicion { display: none; }
+        .foto-card {
+            position: relative;
+            display: inline-block;
+            margin: 5px;
+        }
+        .foto-card img {
+            width: 100px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 2px solid #dee2e6;
+        }
+        .foto-card img.principal {
+            border: 3px solid #198754;
+        }
+        .foto-card .badge-principal {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            font-size: 0.6rem;
+        }
+        .foto-card .controles {
+            font-size: 0.75rem;
+            text-align: center;
+            margin-top: 3px;
+        }
+        #preview_nuevas_fotos img {
+            width: 80px;
+            height: 65px;
+            object-fit: cover;
+            border-radius: 5px;
+            border: 2px solid #b0a78f;
+            margin: 3px;
+        }
     </style>
     <script>
         function validarform(valor) {
-            if (valor === "guardar" || valor === "cancelar") {
+            if (valor === "cancelar") {
                 document.getElementById("id").value = "";
                 limpiarFormulario();
             }
@@ -42,6 +77,10 @@ $esAdministrador = ($_SESSION['nombre_perfil'] === 'Administrador');
             document.getElementById("frm_fecha_publicacion").value = "";
             document.getElementById("frm_estado").value = "";
             document.getElementById("frm_solicitar_visita").checked = false;
+            document.getElementById("frm_fotos").value = "";
+            document.getElementById("preview_nuevas_fotos").innerHTML = "";
+            document.getElementById("galeria_fotos_edicion").style.display = "none";
+            document.getElementById("contenedor_fotos_existentes").innerHTML = "";
             ['bodega','estacionamiento','logia','cocina_amoblada','antejardin','patio_trasero','piscina'].forEach(function(k) {
                 document.getElementById("frm_" + k).checked = false;
             });
@@ -60,11 +99,77 @@ $esAdministrador = ($_SESSION['nombre_perfil'] === 'Administrador');
             document.getElementById("frm_fecha_publicacion").value = datos.fecha_publicacion;
             document.getElementById("frm_estado").value = datos.estado;
             document.getElementById("frm_solicitar_visita").checked = (datos.solicitar_visita == 1);
+            document.getElementById("frm_fotos").value = "";
+            document.getElementById("preview_nuevas_fotos").innerHTML = "";
             ['bodega','estacionamiento','logia','cocina_amoblada','antejardin','patio_trasero','piscina'].forEach(function(k) {
                 document.getElementById("frm_" + k).checked = (datos[k] == 1);
             });
+
+            // Cargar fotos existentes via fetch
+            cargarFotosExistentes(datos.id);
+
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+
+        function cargarFotosExistentes(id_propiedad) {
+            var contenedor = document.getElementById("contenedor_fotos_existentes");
+            var galeria    = document.getElementById("galeria_fotos_edicion");
+            contenedor.innerHTML = '<p class="text-muted">Cargando fotos...</p>';
+            galeria.style.display = "block";
+
+            fetch('get_fotos_propiedad.php?id=' + id_propiedad)
+                .then(r => r.json())
+                .then(fotos => {
+                    if (!fotos.length) {
+                        contenedor.innerHTML = '<p class="text-muted">Sin fotos cargadas.</p>';
+                        return;
+                    }
+                    var html = '';
+                    fotos.forEach(function(f) {
+                        html += '<div class="foto-card">';
+                        html += '<img src="../img/propiedades/' + f.nombre_archivo + '" ' +
+                                (f.es_principal == 1 ? 'class="principal"' : '') + '>';
+                        if (f.es_principal == 1) {
+                            html += '<span class="badge bg-success badge-principal">Principal</span>';
+                        }
+                        html += '<div class="controles">';
+                        // Radio para marcar como principal
+                        html += '<label><input type="radio" name="foto_principal" value="' + f.id + '" ' +
+                                (f.es_principal == 1 ? 'checked' : '') + ' form="frm_prop"> Principal</label><br>';
+                        // Checkbox para eliminar
+                        html += '<label><input type="checkbox" name="eliminar_foto[]" value="' + f.id + '" form="frm_prop"> Eliminar</label>';
+                        html += '</div>';
+                        html += '</div>';
+                    });
+                    contenedor.innerHTML = html;
+                })
+                .catch(() => {
+                    contenedor.innerHTML = '<p class="text-danger">Error al cargar fotos.</p>';
+                });
+        }
+
+        // Preview de fotos nuevas antes de subir
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('frm_fotos').addEventListener('change', function() {
+                var preview = document.getElementById('preview_nuevas_fotos');
+                preview.innerHTML = '';
+                var files = Array.from(this.files);
+                if (files.length > 10) {
+                    alert('Máximo 10 fotografías permitidas.');
+                    this.value = '';
+                    return;
+                }
+                files.forEach(function(f) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        var img = document.createElement('img');
+                        img.src = e.target.result;
+                        preview.appendChild(img);
+                    };
+                    reader.readAsDataURL(f);
+                });
+            });
+        });
     </script>
 </head>
 <body class="bg-light">
@@ -77,6 +182,13 @@ window.addEventListener('DOMContentLoaded', function() {
     } else {
         alert('<?php echo htmlspecialchars($_GET['error'], ENT_QUOTES); ?>');
     }
+});
+</script>
+<?php endif; ?>
+<?php if (isset($_GET['ok'])): ?>
+<script>
+window.addEventListener('DOMContentLoaded', function() {
+    Swal.fire({ icon: 'success', title: '<?php echo htmlspecialchars($_GET['ok'], ENT_QUOTES); ?>', confirmButtonColor: '#b0a78f' });
 });
 </script>
 <?php endif; ?>
@@ -112,6 +224,7 @@ window.addEventListener('DOMContentLoaded', function() {
         <div class="card-header bg-dark text-white">Formulario Propiedad</div>
         <div class="card-body">
           <form action="crud_propiedades.php" method="post" name="frm_prop" id="frm_prop" enctype="multipart/form-data">
+
             <div class="row mb-3">
               <div class="col-sm-3">Tipo de Propiedad:</div>
               <div class="col-sm-3">
@@ -171,11 +284,20 @@ window.addEventListener('DOMContentLoaded', function() {
               </div>
             </div>
 
+            <!-- Galería de fotos existentes (aparece al hacer Editar) -->
+            <div id="galeria_fotos_edicion" class="mb-3">
+              <label class="form-label fw-bold">Fotos actuales:</label>
+              <div id="contenedor_fotos_existentes" class="d-flex flex-wrap"></div>
+              <small class="text-muted">Marca "Principal" para cambiar la foto destacada. Marca "Eliminar" para quitar fotos.</small>
+            </div>
+
+            <!-- Subir fotos nuevas -->
             <div class="row mb-3">
-              <div class="col-sm-3">Fotografías (1 a 10):</div>
+              <div class="col-sm-3">Agregar Fotografías:</div>
               <div class="col-sm-9">
                 <input type="file" class="form-control" id="frm_fotos" name="frm_fotos[]" accept=".jpg,.jpeg,.png,.webp" multiple>
-                <small class="text-muted">Formatos: JPG, PNG, WEBP. Si subes fotos nuevas al modificar, se agregan a las existentes.</small>
+                <small class="text-muted">Formatos: JPG, PNG, WEBP. Máx. 10 fotos en total por propiedad.</small>
+                <div id="preview_nuevas_fotos" class="mt-2"></div>
               </div>
             </div>
 
@@ -220,6 +342,7 @@ window.addEventListener('DOMContentLoaded', function() {
               <button type="button" class="btn btn-secondary" onclick="validarform(this.value)" value="cancelar">Cancelar</button>
               <a href="agregar_propiedad.php" class="btn btn-primary">+ Agregar Nueva Propiedad</a>
             </div>
+
             <input type="hidden" id="accion" name="accion">
             <input type="hidden" name="id" id="id" value="">
           </form>
@@ -236,13 +359,7 @@ window.addEventListener('DOMContentLoaded', function() {
             <table class="table table-hover align-middle">
               <thead class="table-dark">
                 <tr>
-                  <th>Foto</th>
-                  <th>ID</th>
-                  <th>Tipo</th>
-                  <th>Descripción</th>
-                  <th>Precio $</th>
-                  <th>Estado</th>
-                  <th>Acciones</th>
+                  <th>Foto</th><th>ID</th><th>Tipo</th><th>Descripción</th><th>Precio $</th><th>Estado</th><th>Acciones</th>
                 </tr>
               </thead>
               <tbody>
@@ -254,7 +371,8 @@ window.addEventListener('DOMContentLoaded', function() {
                 }
                 $result = mysqli_query(conectar(), $sql);
                 while ($datos = mysqli_fetch_assoc($result)) {
-                    $foto_principal = mysqli_fetch_assoc(mysqli_query(conectar(), "SELECT nombre_archivo FROM fotos_propiedades WHERE id_propiedad='{$datos['id']}' AND es_principal=1 LIMIT 1"));
+                    $foto_principal = mysqli_fetch_assoc(mysqli_query(conectar(),
+                        "SELECT nombre_archivo FROM fotos_propiedades WHERE id_propiedad='{$datos['id']}' AND es_principal=1 LIMIT 1"));
                     $img = $foto_principal ? $foto_principal['nombre_archivo'] : 'default_propiedad.png';
                     $badge = ['activa'=>'success','inactiva'=>'secondary','vendida'=>'danger'];
                     $b = $badge[$datos['estado']] ?? 'secondary';
@@ -268,8 +386,8 @@ window.addEventListener('DOMContentLoaded', function() {
                   <td>$<?php echo number_format($datos['precio_pesos'],0,',','.');?></td>
                   <td><span class="badge bg-<?php echo $b; ?>"><?php echo ucfirst($datos['estado']);?></span></td>
                   <td>
-                    <button type="button" class="btn btn-sm btn-warning" onclick='cargarPropiedad(<?php echo $datosJson; ?>)'>Editar</button>
-
+                    <button type="button" class="btn btn-sm btn-warning"
+                      onclick='cargarPropiedad(<?php echo $datosJson; ?>)'>Editar</button>
                     <form action="crud_propiedades.php" method="post" style="display:inline;"
                           onsubmit="return confirm('¿Estás seguro de eliminar esta propiedad?');">
                       <input type="hidden" name="id" value="<?php echo $datos['id']; ?>">

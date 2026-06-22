@@ -12,7 +12,7 @@
     <header>
     <ul>
       <li class="logo">
-        <a href="index.html"><img src="img/logo.png" alt="Logo PNK"></a>
+        <a href="index.php"><img src="img/logo.png" alt="Logo PNK"></a>
       </li>
     </ul>
     <ul>
