@@ -1,10 +1,8 @@
 <?php
 function conectar() {
-    mysqli_report(MYSQLI_REPORT_OFF);
-
     $servername = "localhost";
-    $username   = "pnk_web";      // <--- NUEVO USUARIO
-    $password   = "pnk_12345";    // <--- NUEVA CLAVE
+    $username   = "root"; // usuario por defecto en WAMP
+    $password   = "";     // contraseña vacía por defecto
     $dbname     = "pnks";
 
     $conn = new mysqli($servername, $username, $password, $dbname);

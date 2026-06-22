@@ -6,6 +6,11 @@ if (!isset($_SESSION['usuario_sesion'])) {
     exit;
 }
 $esAdministrador = ($_SESSION['nombre_perfil'] === 'Administrador');
+// Obtener ID del usuario logueado
+$db_usr = conectar();
+$nombre_esc = mysqli_real_escape_string($db_usr, $_SESSION['usuario_sesion']);
+$usr_data = mysqli_fetch_assoc(mysqli_query($db_usr, "SELECT id FROM usuarios WHERE nombre='$nombre_esc' LIMIT 1"));
+$id_sesion = $usr_data ? $usr_data['id'] : 0;
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -197,7 +202,7 @@ window.addEventListener('DOMContentLoaded', function() {
 <nav class="navbar navbar-dark bg-dark shadow">
   <div class="container-fluid">
     <span class="navbar-brand">🏡 Gestión de Propiedades</span>
-    <a href="../dashboard.php" class="btn btn-secondary btn-sm">Volver al Dashboard</a>
+    <a href="../dashboards/admin.php" class="btn btn-secondary btn-sm">Volver al Dashboard</a>
   </div>
 </nav>
 
@@ -207,7 +212,7 @@ window.addEventListener('DOMContentLoaded', function() {
     <div class="col-md-2 bg-dark text-white p-3 vh-100">
       <h5 class="mb-4">Menú</h5>
       <ul class="nav flex-column">
-        <li class="nav-item"><a class="nav-link text-white" href="../dashboard.php">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="../dashboards/admin.php">Inicio</a></li>
         <?php if ($esAdministrador): ?>
         <li class="nav-item"><a class="nav-link text-white" href="frm_usuarios.php">Usuarios</a></li>
         <?php endif; ?>

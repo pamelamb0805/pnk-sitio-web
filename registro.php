@@ -194,7 +194,7 @@
         <div class="clearfix">
           <button type="button" class="cancelbtn" onclick="window.location.href='index.php'">Cancelar</button>
           <input type="hidden" name="idperfil" value="3">
-          <button type="submit" name="btnGestor">Registrar</button>
+          <button type="submit" name="registrar_gestor">Registrar</button>
         </div>
       </div>
     </form>

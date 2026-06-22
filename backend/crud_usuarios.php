@@ -50,6 +50,7 @@ function insertar() {
     $usuario   = $_POST['frmusuario'];
     $estado    = $_POST['frm_estado'];
     $idperfil  = $_POST['frm_idperfil'];
+    $fecha_nac = !empty($_POST['frm_fecha_nacimiento']) ? $_POST['frm_fecha_nacimiento'] : '2000-01-01';
 
     // Foto: si se subió una válida, se usa; si no, queda default.png
     $foto = procesarFoto();
@@ -58,9 +59,9 @@ function insertar() {
     }
     $foto = mysqli_real_escape_string($conexion, $foto);
 
-    // Query de inserción
-    $sql = "INSERT INTO usuarios (rut, nombre, apellido, email, estado, fecha_hora, foto, idperfil) 
-            VALUES ('$rut', '$nombre', '$apellido', '$usuario', '$estado', NOW(), '$foto', '$idperfil')";
+    // Query de inserción (incluyendo todos los campos requeridos)
+    $sql = "INSERT INTO usuarios (rut, nombre, apellido, fecha_nacimiento, genero, telefono, email, clave, estado, fecha_hora, foto, idperfil) 
+            VALUES ('$rut', '$nombre', '$apellido', '$fecha_nac', 'No especificado', 'Sin teléfono', '$usuario', 'sinclave123', '$estado', NOW(), '$foto', '$idperfil')";
 
     mysqli_query($conexion, $sql) or die("Error en inserción: " . mysqli_error($conexion));
     header("Location: frm_usuarios.php");
@@ -82,6 +83,7 @@ function modificar() {
     $usuario  = $_POST['frmusuario'];
     $estado   = $_POST['frm_estado'];
     $idperfil = $_POST['frm_idperfil'];
+    $fecha_nac = !empty($_POST['frm_fecha_nacimiento']) ? "'" . mysqli_real_escape_string($conexion, $_POST['frm_fecha_nacimiento']) . "'" : "fecha_nacimiento";
 
     // Foto: solo se reemplaza si el admin subió una nueva
     $foto_nueva = procesarFoto();
@@ -101,6 +103,7 @@ function modificar() {
                 SET rut='$rut', 
                     nombre='$nombre', 
                     apellido='$apellido', 
+                    fecha_nacimiento=$fecha_nac,
                     email='$usuario', 
                     estado='$estado', 
                     idperfil='$idperfil',
@@ -112,6 +115,7 @@ function modificar() {
                 SET rut='$rut', 
                     nombre='$nombre', 
                     apellido='$apellido', 
+                    fecha_nacimiento=$fecha_nac,
                     email='$usuario', 
                     estado='$estado', 
                     idperfil='$idperfil'

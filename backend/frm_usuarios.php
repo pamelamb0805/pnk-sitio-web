@@ -21,7 +21,7 @@ include ("../config/setup.php");
             document.getElementById("frm_usu").submit();
         }
 
-        function cargarUsuario(id, rut, nombre, apellido, email, estado, idperfil, foto) {
+        function cargarUsuario(id, rut, nombre, apellido, email, estado, idperfil, foto, fecha_nac) {
             document.getElementById("id").value = id;
             document.getElementById("frm_rut").value = rut;
             document.getElementById("frm_nombre").value = nombre;
@@ -29,6 +29,7 @@ include ("../config/setup.php");
             document.getElementById("frmusuario").value = email;
             document.getElementById("frm_estado").value = estado;
             document.getElementById("frm_idperfil").value = idperfil;
+            document.getElementById("frm_fecha_nacimiento").value = fecha_nac || '';
             document.getElementById("preview_foto").src = "../img/" + foto;
             document.getElementById("frm_foto").value = "";
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -85,6 +86,10 @@ include ("../config/setup.php");
             <div class="row mb-3">
               <div class="col-sm-3">Apellidos:</div>
               <div class="col-sm-3"><input type="text" class="form-control" id="frm_apellido" name="frm_apellido"></div>
+              <div class="col-sm-3">Fecha Nacimiento:</div>
+              <div class="col-sm-3"><input type="date" class="form-control" id="frm_fecha_nacimiento" name="frm_fecha_nacimiento"></div>
+            </div>
+            <div class="row mb-3">
               <div class="col-sm-3">Estado:</div>
               <div class="col-sm-3">
                 <select class="form-select" id="frm_estado" name="frm_estado">
@@ -93,8 +98,6 @@ include ("../config/setup.php");
                   <option value="0">Inactivo</option>
                 </select>
               </div>
-            </div>
-            <div class="row mb-3">
               <div class="col-sm-3">Perfil:</div>
               <div class="col-sm-3">
                 <select class="form-select" id="frm_idperfil" name="frm_idperfil">
@@ -104,8 +107,12 @@ include ("../config/setup.php");
                   <option value="3">Gestor Inmobiliario</option>
                 </select>
               </div>
+            </div>
+            <div class="row mb-3">
               <div class="col-sm-3">Correo (Usuario):</div>
               <div class="col-sm-3"><input type="text" class="form-control" id="frmusuario" name="frmusuario"></div>
+              <div class="col-sm-3"></div>
+              <div class="col-sm-3"></div>
             </div>
             <div class="row mb-3 align-items-center">
               <div class="col-sm-3">Foto de Perfil:</div>
@@ -178,7 +185,8 @@ include ("../config/setup.php");
                         '<?php echo addslashes($datos['email']); ?>',
                         '<?php echo $datos['estado']; ?>',
                         '<?php echo $datos['idperfil']; ?>',
-                        '<?php echo addslashes($foto_actual); ?>'
+                        '<?php echo addslashes($foto_actual); ?>',
+                        '<?php echo $datos['fecha_nacimiento']; ?>'
                       )">Editar</button>
 
                     <form action="crud_usuarios.php" method="post" style="display:inline;"

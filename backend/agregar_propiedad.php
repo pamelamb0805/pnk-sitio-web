@@ -45,7 +45,7 @@ window.addEventListener('DOMContentLoaded', function() {
 <nav class="navbar navbar-dark bg-dark shadow">
   <div class="container-fluid">
     <span class="navbar-brand">➕ Agregar Nueva Propiedad</span>
-    <a href="../dashboard.php" class="btn btn-secondary btn-sm">Volver al Dashboard</a>
+    <a href="../dashboards/admin.php" class="btn btn-secondary btn-sm">Volver al Dashboard</a>
   </div>
 </nav>
 
@@ -55,7 +55,7 @@ window.addEventListener('DOMContentLoaded', function() {
     <div class="col-md-2 bg-dark text-white p-3 vh-100">
       <h5 class="mb-4">Menú</h5>
       <ul class="nav flex-column">
-        <li class="nav-item"><a class="nav-link text-white" href="../dashboard.php">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="../dashboards/admin.php">Inicio</a></li>
         <?php if ($esAdministrador): ?>
         <li class="nav-item"><a class="nav-link text-white" href="frm_usuarios.php">Usuarios</a></li>
         <?php endif; ?>

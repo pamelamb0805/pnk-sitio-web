@@ -45,8 +45,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $_SESSION['usuario_sesion'] = $datos['nombre'];   // campo correcto en tu BD
     $_SESSION['foto_sesion']    = $datos['foto'];
     $_SESSION['nombre_perfil']  = $datos['nombre_perfil'];
+    $_SESSION['id_sesion']      = $datos['id'];        // ← AGREGADO para que funcione guardar_propiedad.php
 
-    header("Location: ../dashboard.php"); // dashboard en raíz
+    // Redirigir según el perfil del usuario
+    switch($datos['nombre_perfil']) {
+        case 'Administrador':
+            header("Location: ../dashboards/admin.php");
+            break;
+        case 'Gestor Inmobiliario':
+            header("Location: ../dashboards/gestor.php");
+            break;
+        case 'Propietario':
+            header("Location: ../dashboards/propietario.php");
+            break;
+        default:
+            header("Location: ../dashboard.php");
+            break;
+    }
     exit();
 
     mysqli_close($conexion);
